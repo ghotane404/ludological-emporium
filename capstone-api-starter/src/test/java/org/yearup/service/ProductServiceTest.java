@@ -1,30 +1,39 @@
-package org.yearup.repository;
+package org.yearup.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.yearup.models.Product;
+import org.yearup.repository.ProductRepository;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.*;
 
 @DataJpaTest
 @Sql(scripts = "classpath:test-insert-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class ProductRepositoryTest {
+
 	@Autowired
 	private ProductRepository productRepository;
 
 	@Test
-	public void getById_shouldReturn_theCorrectProduct() {
-		// arrange
-		int productId = 1;
-
+	void findAll_shouldReturnAllProductsFromDatabase() {
 		// act
-		Product actual = productRepository.findById(productId).orElse(null);
+		List<Product> products = productRepository.findAll();
 
 		// assert
-		assertNotNull(actual, "Because product 1 should exist in the test database.");
-		assertEquals(499.99, actual.getPrice(), 0.001, "Because I tried to get product 1 from the database.");
+		assertEquals(10, products.size());
+	}
+
+	@Test
+	void findByCategoryId_shouldReturnProductsInCategory() {
+		// act
+		List<Product> products = productRepository.findByCategoryId(1);
+
+		// assert
+		assertEquals(4, products.size());
 	}
 }
