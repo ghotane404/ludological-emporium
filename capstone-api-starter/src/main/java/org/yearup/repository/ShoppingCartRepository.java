@@ -7,11 +7,10 @@ import org.yearup.models.CartItem;
 import java.util.List;
 
 @Repository
-public interface ShoppingCartRepository extends JpaRepository<CartItem, Integer>
-{
-    List<CartItem> findByUserId(int userId);
+public interface ShoppingCartRepository extends JpaRepository<CartItem, Integer> {
+	List<CartItem> findByUserId(int userId);
 
-    CartItem findByUserIdAndProductId(int userId, int productId);
+	CartItem findByUserIdAndProductId(int userId, int productId);
 
-    void deleteByUserId(int userId);
+	void deleteByUserId(int userId);
 }
