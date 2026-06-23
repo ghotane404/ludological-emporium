@@ -54,6 +54,7 @@ public class ProductsController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
 		return productService.update(id, product);
+
 	}
 
 	@DeleteMapping("{id}")
