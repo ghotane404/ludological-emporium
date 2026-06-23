@@ -3,12 +3,11 @@ let cartService;
 class ShoppingCartService {
 
     cart = {
-        items:[],
-        total:0
+        items: [],
+        total: 0
     };
 
-    addToCart(productId)
-    {
+    addToCart(productId) {
         const url = `${config.baseUrl}/cart/products/${productId}`;
         // const headers = userService.getHeaders();
 
@@ -29,8 +28,7 @@ class ShoppingCartService {
             })
     }
 
-    setCart(data)
-    {
+    setCart(data) {
         this.cart = {
             items: [],
             total: 0
@@ -43,8 +41,7 @@ class ShoppingCartService {
         }
     }
 
-    loadCart()
-    {
+    loadCart() {
 
         const url = `${config.baseUrl}/cart`;
 
@@ -66,15 +63,14 @@ class ShoppingCartService {
 
     }
 
-    loadCartPage()
-    {
+    loadCartPage() {
         // templateBuilder.build("cart", this.cart, "main");
 
         const main = document.getElementById("main")
         main.innerHTML = "";
 
         let div = document.createElement("div");
-        div.classList="filter-box";
+        div.classList = "filter-box";
         main.appendChild(div);
 
         const contentDiv = document.createElement("div")
@@ -104,8 +100,7 @@ class ShoppingCartService {
         });
     }
 
-    buildItem(item, parent)
-    {
+    buildItem(item, parent) {
         let outerDiv = document.createElement("div");
         outerDiv.classList.add("cart-item");
 
@@ -141,61 +136,54 @@ class ShoppingCartService {
         parent.appendChild(outerDiv);
     }
 
-    clearCart()
-    {
+    clearCart() {
 
         const url = `${config.baseUrl}/cart`;
 
         axios.delete(url)
-             .then(response => {
-                 this.cart = {
-                     items: [],
-                     total: 0
-                 }
+            .then(response => {
+                this.cart = {
+                    items: [],
+                    total: 0
+                }
 
-                 this.cart.total = response.data.total;
+                this.cart.total = response.data.total;
 
-                 for (const [key, value] of Object.entries(response.data.items)) {
-                     this.cart.items.push(value);
-                 }
+                for (const [key, value] of Object.entries(response.data.items)) {
+                    this.cart.items.push(value);
+                }
 
-                 this.updateCartDisplay()
-                 this.loadCartPage()
+                this.updateCartDisplay()
+                this.loadCartPage()
 
-             })
-             .catch(error => {
+            })
+            .catch(error => {
 
-                 const data = {
-                     error: "Empty cart failed."
-                 };
+                const data = {
+                    error: "Empty cart failed."
+                };
 
-                 templateBuilder.append("error", data, "errors")
-             })
+                templateBuilder.append("error", data, "errors")
+            })
     }
 
-    updateCartDisplay()
-    {
+    updateCartDisplay() {
         try {
             const itemCount = this.cart.items.length;
             const cartControl = document.getElementById("cart-items")
 
             cartControl.innerText = itemCount;
-        }
-        catch (e) {
+        } catch (e) {
 
         }
     }
 }
 
 
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     cartService = new ShoppingCartService();
 
-    if(userService.isLoggedIn())
-    {
+    if (userService.isLoggedIn()) {
         cartService.loadCart();
     }
 
