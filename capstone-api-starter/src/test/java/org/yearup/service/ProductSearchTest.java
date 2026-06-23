@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @Sql(scripts = "classpath:test-insert-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class ProductSearchTest {
-
 	@Autowired
 	private ProductRepository productRepository;
 	private ProductService productService;
