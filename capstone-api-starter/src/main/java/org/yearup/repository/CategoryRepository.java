@@ -6,7 +6,4 @@ import org.yearup.models.Category;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
-
-
-
 }

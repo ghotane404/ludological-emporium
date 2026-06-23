@@ -1,18 +1,30 @@
+/* INSERT Users */
+INSERT INTO users (username, hashed_password, role)
+VALUES  ('user',  '$2a$10$NkufUPF3V8dEPSZeo1fzHe9ScBu.LOay9S3N32M84yuUM2OJYEJ/.', 'ROLE_USER'),
+        ('admin', '$2a$10$lfQi9jSfhZZhfS6/Kyzv3u3418IgnWXWDQDk7IbcwlCFPgxg9Iud2', 'ROLE_ADMIN');
+
+/* INSERT Profiles */
+INSERT INTO profiles (user_id, first_name, last_name, phone, email, address, city, state, zip)
+VALUES  (1, 'Joe',  'Joesephus', '800-555-1234', 'joejoesephus@email.com', '789 Oak Avenue',  'Dallas', 'TX', '75051'),
+        (2, 'Adam', 'Admamson',  '800-555-1212', 'aaadamson@email.com',   '456 Elm Street',  'Dallas', 'TX', '75052');
+
 /* INSERT Categories */
-INSERT INTO categories (category_id, name, description)
-VALUES
-    (1, 'Console Games', 'Games for PlayStation, Xbox, and Nintendo.'),
-    (2, 'PC Games', 'PC gaming titles.'),
-    (3, 'Gaming Accessories', 'Gaming gear and accessories.');
+INSERT INTO categories (name, description)
+VALUES  ('Electronics',   'Explore the latest gadgets and electronic devices.'),
+        ('Fashion',       'Discover trendy clothing and accessories for men and women.'),
+        ('Home & Kitchen','Find everything you need to decorate and equip your home.');
 
 /* INSERT Products */
-INSERT INTO products (product_id, name, price, category_id, description, image_url, stock, featured, subcategory)
-VALUES
-    (1, 'The Legend of Zelda: Breath of the Wild', 59.99, 1, 'Open-world adventure game.', 'zelda-botw.jpg', 50, 1, 'Adventure'),
-    (2, 'God of War', 49.99, 1, 'Action-adventure game.', 'god-of-war.jpg', 40, 1, 'Action'),
-    (3, 'Halo Infinite', 59.99, 1, 'Sci-fi shooter.', 'halo-infinite.jpg', 35, 0, 'Shooter'),
-    (4, 'Cyberpunk 2077', 29.99, 2, 'Open-world RPG.', 'cyberpunk-2077.jpg', 100, 0, 'RPG'),
-    (5, 'Baldur''s Gate 3', 59.99, 2, 'Turn-based RPG.', 'baldurs-gate-3.jpg', 75, 1, 'RPG'),
-    (6, 'Counter-Strike 2', 0.00, 2, 'Competitive tactical shooter.', 'counter-strike-2.jpg', 999, 1, 'Shooter'),
-    (7, 'Xbox Wireless Controller', 59.99, 3, 'Xbox controller.', 'xbox-controller.jpg', 50, 1, 'Controller'),
-    (8, 'Gaming Mousepad XL', 19.99, 3, 'Large gaming mousepad.', 'xl-mousepad.jpg', 100, 0, 'Peripheral');
+INSERT INTO products (name, price, category_id, description, image_url, stock, featured, subcategory)
+VALUES  ('Smartphone',       499.99, 1, 'A powerful and feature-rich smartphone for all your communication needs.', 'smartphone.jpg',     50, 0, 'Black'),
+        ('Laptop',           899.99, 1, 'A high-performance laptop for work and entertainment.',                    'laptop.jpg',         30, 0, 'Gray'),
+        ('Headphones',        99.99, 1, 'Immerse yourself in music with these high-quality headphones.',            'headphones.jpg',    100, 1, 'White'),
+        ('Men''s T-Shirt',    29.99, 2, 'A comfortable and stylish t-shirt for everyday wear.',                    'mens-tshirt.jpg',    50, 1, 'Charcoal'),
+        ('Men''s Jeans',      59.99, 2, 'Classic denim jeans for a timeless and casual look.',                     'mens-jeans.jpg',     30, 0, 'Blue'),
+        ('Men''s Dress Shirt',49.99, 2, 'A sophisticated dress shirt for formal occasions.',                       'mens-dress-shirt.jpg',40, 0, 'White'),
+        ('Women''s Dress',    79.99, 2, 'A beautiful and elegant dress for special occasions.',                    'womens-dress.jpg',   50, 0, 'Mint'),
+        ('Women''s Jeans',    69.99, 2, 'Comfortable and stylish jeans for a fashionable look.',                   'womens-jeans.jpg',   30, 1, 'Blue'),
+        ('Women''s Blouse',   49.99, 2, 'A versatile and chic blouse for everyday wear.',                         'womens-blouse.jpg',  40, 0, 'Lavender'),
+        ('Cookware Set',     149.99, 3, 'A comprehensive set of high-quality cookware for all your culinary needs.','cookware-set.jpg',  50, 1, 'Red'),
+        ('Coffee Maker',      79.99, 3, 'Brew your favorite coffee with this efficient and stylish coffee maker.', 'coffee-maker.jpg',   30, 0, 'Black'),
+        ('Kitchen Knife Set', 59.99, 3, 'A set of sharp and durable knives for effortless food preparation.',     'knife-set.jpg',      40, 1, 'Silver');
