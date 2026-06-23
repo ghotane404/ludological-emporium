@@ -6,6 +6,8 @@ import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.yearup.models.Product;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -14,6 +16,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ProductRepositoryTest {
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Test
+	void findAll_shouldReturnAllProductsFromDatabase() {
+		// act
+		List<Product> products = productRepository.findAll();
+
+		// assert
+		assertEquals(8, products.size());
+	}
+
+	@Test
+	void findByCategoryId_shouldReturnProductsInCategory() {
+		// act
+		List<Product> products = productRepository.findByCategoryId(1);
+
+		// assert
+		assertEquals(3, products.size());
+	}
 
 	@Test
 	public void getById_shouldReturn_theCorrectProduct() {
@@ -25,6 +45,7 @@ class ProductRepositoryTest {
 
 		// assert
 		assertNotNull(actual, "Because product 1 should exist in the test database.");
-		assertEquals(499.99, actual.getPrice(), 0.001, "Because I tried to get product 1 from the database.");
+		assertEquals("The Legend of Zelda: Breath of the Wild", actual.getName());
+		assertEquals(59.99, actual.getPrice(), 0.001, "Because product 1 is Zelda in the test database.");
 	}
 }
