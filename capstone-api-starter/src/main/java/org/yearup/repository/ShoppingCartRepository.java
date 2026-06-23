@@ -1,6 +1,8 @@
 package org.yearup.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.yearup.models.CartItem;
 
@@ -12,5 +14,10 @@ public interface ShoppingCartRepository extends JpaRepository<CartItem, Integer>
 
 	CartItem findByUserIdAndProductId(int userId, int productId);
 
-	void deleteByUserId(int userId);
+	@Modifying
+	@Query("""
+        DELETE FROM CartItem c
+        WHERE c.userId = :userId
+        """)
+	int deleteByUserId(int userId);
 }
