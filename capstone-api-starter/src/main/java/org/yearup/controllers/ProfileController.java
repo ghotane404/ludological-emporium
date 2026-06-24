@@ -39,13 +39,18 @@ public class ProfileController {
 
 
 	@PutMapping("")
-	public void updateProfile(@RequestBody ProfileDto profile, Principal principal) {
+	public ResponseEntity<Object> updateProfile(@RequestBody ProfileDto profile, Principal principal) {
 		String userName = principal.getName();
 
 		User user = userService.getByUserName(userName);
 		int userId = user.getId();
 
-		profileService.update(userId, profile);
+		boolean updated = profileService.update(userId, profile);
+
+		if (!updated)
+			return ResponseEntity.notFound().build();
+
+		return ResponseEntity.noContent().build();
 	}
 
 }

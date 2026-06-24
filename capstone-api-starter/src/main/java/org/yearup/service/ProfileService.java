@@ -16,7 +16,7 @@ public class ProfileService {
 	public Profile getProfile(int userId) {
 		// Intentional flaw: throws RuntimeException instead of proper exception
 		return profileRepository.findById(userId)
-				.orElseThrow(() -> new RuntimeException("Internship not found with id: " + userId));
+				.orElseThrow(() -> new RuntimeException("Profile not found with user id: " + userId));
 	}
 
 	public Profile create(Profile profile) {
