@@ -1,47 +1,44 @@
 let profileService;
 
-class ProfileService
-{
-    loadProfile()
-    {
+class ProfileService {
+    loadProfile() {
         const url = `${config.baseUrl}/profile`;
 
         axios.get(url)
-             .then(response => {
-                 templateBuilder.build("profile", response.data, "main")
-             })
-             .catch(error => {
-                 const data = {
-                     error: "Load profile failed."
-                 };
+            .then(response => {
+                templateBuilder.build("profile", response.data, "main")
+            })
+            .catch(error => {
+                const data = {
+                    error: "Load profile failed."
+                };
 
-                 templateBuilder.append("error", data, "errors")
-             })
+                templateBuilder.append("error", data, "errors")
+            })
     }
 
-    updateProfile(profile)
-    {
+    updateProfile(profile) {
 
         const url = `${config.baseUrl}/profile`;
 
         axios.put(url, profile)
-             .then(() => {
-                 const data = {
-                     message: "The profile has been updated."
-                 };
+            .then(() => {
+                const data = {
+                    message: "The profile has been updated."
+                };
 
-                 templateBuilder.append("message", data, "errors")
-             })
-             .catch(error => {
-                 const data = {
-                     error: "Save profile failed."
-                 };
+                templateBuilder.append("message", data, "errors")
+            })
+            .catch(error => {
+                const data = {
+                    error: "Save profile failed."
+                };
 
-                 templateBuilder.append("error", data, "errors")
-             })
+                templateBuilder.append("error", data, "errors")
+            })
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-   profileService = new ProfileService();
+    profileService = new ProfileService();
 });
