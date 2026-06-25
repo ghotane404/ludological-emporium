@@ -28,6 +28,7 @@ public class ShoppingCartService {
 		for (var item : items) {
 			Product product = productService.getById(item.getProductId());  // use productId to find full Product object
 			ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+
 			shoppingCartItem.setProduct(product);       // sets full product details to shoppingCartItem
 			shoppingCartItem.setQuantity(item.getQuantity());       // copy the quantity from the database cart row
 			//Add discount???

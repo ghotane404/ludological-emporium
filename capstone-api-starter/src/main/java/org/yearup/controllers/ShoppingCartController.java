@@ -48,9 +48,9 @@ public class ShoppingCartController {
 		boolean succeeded = shoppingCartService.create(productId, user.getId());
 
 		// returns 400 Bad Request if product doesn't exist
-		if(!succeeded) {
+		if(!succeeded)
 			return ResponseEntity.badRequest().build();
-		}
+
 
 		// location tells client where the updated cart can be found
 		URI location = URI.create("/cart");
@@ -71,9 +71,8 @@ public class ShoppingCartController {
 		if (productQuantity.quantity < 1) {
 			boolean deleted = shoppingCartService.delete(productId, user.getId());     // delete for this user only
 
-			if(!deleted) {
+			if(!deleted)
 				return ResponseEntity.badRequest().build();     // returns 400 Bad request if item nto found
-			}
 
 			// reloading FULL cart after item has been deleted
 			ShoppingCart updatedCart = shoppingCartService.getByUserId(user.getId());

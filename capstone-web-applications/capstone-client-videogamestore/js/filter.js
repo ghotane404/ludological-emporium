@@ -1,8 +1,4 @@
-
-
-
-function loadCategories(categories)
-{
+function loadCategories(categories) {
     const select = document.getElementById('category-select');
 
     categories.forEach(c => {
@@ -14,4 +10,17 @@ function loadCategories(categories)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-})
+    const select = document.getElementById('category-select');
+
+    select.addEventListener('change', () => {
+        const categoryId = select.value;
+
+        if (categoryId === "") {
+            productService.loadProducts();
+        }
+        else{
+            productService.loadProductsByCategory(categoryId);
+        }
+    });
+
+});

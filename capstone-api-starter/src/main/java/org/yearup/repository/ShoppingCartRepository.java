@@ -20,4 +20,6 @@ public interface ShoppingCartRepository extends JpaRepository<CartItem, Integer>
         WHERE c.userId = :userId
         """)
 	int deleteByUserId(int userId);
+
+
 }
