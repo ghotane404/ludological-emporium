@@ -13,12 +13,12 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@PreAuthorize("isAuthenticated()")
 @RequestMapping("/categories")
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class CategoriesController {
-	private CategoryService categoryService;
-	private ProductService productService;
+	private final CategoryService categoryService;
+	private final ProductService productService;
 
 	@Autowired
 	public CategoriesController(CategoryService categoryService, ProductService productService) {
@@ -53,7 +53,7 @@ public class CategoriesController {
 	}
 
 	@PostMapping("")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Category> addCategory(@RequestBody Category category) {
 		var newCategory = categoryService.create(category);
 		// location tells clients where the new category can be located
@@ -64,7 +64,7 @@ public class CategoriesController {
 	}
 
 	@PutMapping("{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Category> updateCategory(@PathVariable int id, @RequestBody Category category) {
 		var updatedCategory = categoryService.update(id, category);
 
@@ -74,7 +74,7 @@ public class CategoriesController {
 	}
 
 	@DeleteMapping("{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Void> deleteCategory(@PathVariable int id) {
 		boolean deletedCategory = categoryService.delete(id);
 
