@@ -14,35 +14,27 @@ public class ProfileService {
 	}
 
 	public Profile getProfile(int userId) {
-		// Intentional flaw: throws RuntimeException instead of proper exception
-		return profileRepository.findById(userId)
-				.orElseThrow(() -> new RuntimeException("Profile not found with user id: " + userId));
+		return profileRepository.findById(userId).orElse(null);
 	}
 
 	public Profile create(Profile profile) {
 		return profileRepository.save(profile);
 	}
 
-	public boolean update(int userId, ProfileDto profile) {
+	public boolean update(int userId, ProfileDto profileDto) {
+		var existing = profileRepository.findById(userId).orElse(null);
+		if (existing == null) return false;
 
-		var currProfileObj = profileRepository.findById(userId);
-		if (!currProfileObj.isPresent()) {
-			return false;
-		}
+		existing.setFirstName(profileDto.firstName);
+		existing.setLastName(profileDto.lastName);
+		existing.setPhone(profileDto.phone);
+		existing.setEmail(profileDto.email);
+		existing.setAddress(profileDto.address);
+		existing.setCity(profileDto.city);
+		existing.setState(profileDto.state);
+		existing.setZip(profileDto.zip);
 
-		var currProfile = currProfileObj.get();
-
-		currProfile.setFirstName(profile.firstName);
-		currProfile.setLastName(profile.lastName);
-		currProfile.setPhone(profile.phone);
-		currProfile.setEmail(profile.email);
-		currProfile.setAddress(profile.address);
-		currProfile.setCity(profile.city);
-		currProfile.setState(profile.state);
-		currProfile.setZip(profile.zip);
-
-		profileRepository.save(currProfile);
+		profileRepository.save(existing);
 		return true;
 	}
-
 }

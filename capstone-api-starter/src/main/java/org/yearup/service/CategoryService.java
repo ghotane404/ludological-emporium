@@ -1,8 +1,6 @@
 package org.yearup.service;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import org.yearup.models.Category;
 import org.yearup.repository.CategoryRepository;
 
@@ -17,25 +15,25 @@ public class CategoryService {
 	}
 
 	public List<Category> getAllCategories() {
-		// get all categories
 		return categoryRepository.findAll();
 	}
 
 	public Category getById(int categoryId) {
 		// get category by id
-		return categoryRepository.findById(categoryId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+		return categoryRepository.findById(categoryId).orElse(null);
 	}
 
 	public Category create(Category category) {
-		// create a new category
+		category.setCategoryId(0);  // the id is reset so that it's treated as a new category
+
 		return categoryRepository.save(category);
 	}
 
 	public Category update(int categoryId, Category category) {
 		// update category and return the updated category
-		Category updateCategory = categoryRepository.findById(categoryId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+		Category updateCategory = categoryRepository.findById(categoryId).orElse(null);
+
+		if (updateCategory == null) return null;
 
 		updateCategory.setName(category.getName());
 		updateCategory.setDescription(category.getDescription());
@@ -43,11 +41,13 @@ public class CategoryService {
 		return categoryRepository.save(updateCategory);
 	}
 
-	public void delete(int categoryId) {
-		// delete category
-		Category category = categoryRepository.findById(categoryId)
-				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+	public boolean delete(int categoryId) {
+		Category category = categoryRepository.findById(categoryId).orElse(null);
+
+		if (category == null) return false;
 
 		categoryRepository.delete(category);
+
+		return true;    // delete category
 	}
 }

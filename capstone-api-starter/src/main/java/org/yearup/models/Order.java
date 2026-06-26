@@ -33,7 +33,6 @@ public class Order {
 	@Column(name = "shipping_amount")
 	private double shippingAmount;
 
-
 	public Order() {
 	}
 
@@ -112,7 +111,4 @@ public class Order {
 		this.shippingAmount = shippingAmount;
 	}
 
-
 }
-
-

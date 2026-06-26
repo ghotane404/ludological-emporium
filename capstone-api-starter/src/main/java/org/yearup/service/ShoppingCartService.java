@@ -20,35 +20,32 @@ public class ShoppingCartService {
 	}
 
 	public ShoppingCart getByUserId(int userId) {
-		// loads the user's cart rows, look up each product
-		var items = shoppingCartRepository.findByUserId(userId);
-		var shoppingCart = new ShoppingCart();      // empty ShoppingCart object to fill items
+		var cartItems = shoppingCartRepository.findByUserId(userId);    // loads the user's cart rows, look up each product
+		var shoppingCart = new ShoppingCart();      // empty ShoppingCart object to fill in shoppingCartItem
 
-		// checking every CartItem from db that belongs to user
-		for (var item : items) {
-			Product product = productService.getById(item.getProductId());  // use productId to find full Product object
-			ShoppingCartItem shoppingCartItem = new ShoppingCartItem();
+		// checking every item in cartItems from db that belongs to user
+		for (var item : cartItems) {
+			var product = productService.getById(item.getProductId());  // use productId to find full Product object
+			// ShoppingCartItem object holds project details and qty before adding it to shoppingCart
+			var shoppingCartItem = new ShoppingCartItem();
 
 			shoppingCartItem.setProduct(product);       // sets full product details to shoppingCartItem
 			shoppingCartItem.setQuantity(item.getQuantity());       // copy the quantity from the database cart row
-			//Add discount???
-			shoppingCart.add(shoppingCartItem);     // add them all here
+
+			shoppingCart.add(shoppingCartItem);     // add all the shoppingCartItem in the shoppingCart object
 		}
 
 		return shoppingCart;
 	}
 
-	// add additional methods here
 	public boolean create(int productId, int userId) {
-		Product product = productService.getById(productId);        // checking if product exists
+		var product = productService.getById(productId);        // checking if product exists
 
-		if(product == null)
-			return false;       // will fail if it doesn't exist
+		if(product == null) return false;       // will fail if it doesn't exist
 
-		// verifying whether user already has product in their cart
-		CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+		// verifying whether user already has product in their cart 
+		var cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
-		// if not will create new
 		if (cartItem == null) {
 			cartItem = new CartItem();      // create a new CartItem entity for the database
 
@@ -57,32 +54,30 @@ public class ShoppingCartService {
 			cartItem.setQuantity(1);        // setting qty to 1 since it's a new cart
 		}
 		else {
-			// updates qty by 1 if product exists in cart
-			cartItem.setQuantity(cartItem.getQuantity() + 1);
+			cartItem.setQuantity(cartItem.getQuantity() + 1);   // updates qty by 1 if product exists in cart
 		}
 
 		shoppingCartRepository.save(cartItem);      // stores the updated cart to db
+
 		return true;
 	}
 
-	public ShoppingCartItem update(int productId, int userId, int quantity) {
-		// finding the user and their product
-		CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
+	@Transactional
+	public boolean update(int productId, int userId, int quantity) {
+		var cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
 
-		// doesn't update if cart doesn't exist
-		if(cartItem == null)
-			return null;
+		if(cartItem == null) return false;      // doesn't update if cart doesn't exist
+
+		// if qty is less than 1, removes only that item from the cart
+		if (quantity < 1){
+			shoppingCartRepository.delete(cartItem);       // delete for this user only
+			return true;
+		}
 
 		cartItem.setQuantity(quantity);     // Update the quantity on the database entity.
 		shoppingCartRepository.save(cartItem);      // Save the updated quantity to the database.
 
-		var shoppingCartItem = new ShoppingCartItem();      // Build a ShoppingCartItem response object.
-		Product product = productService.getById(productId);    // Get the full product details for the response.
-
-		shoppingCartItem.setProduct(product);       // Add product details to the response object.
-		shoppingCartItem.setQuantity(cartItem.getQuantity());       // Add the updated quantity to the response object.
-
-		return shoppingCartItem;
+		return true;
 	}
 
 	// No EntityManager with actual transaction available for current thread
@@ -90,20 +85,6 @@ public class ShoppingCartService {
 	@Transactional
 	public boolean delete(int userId) {
 		shoppingCartRepository.deleteByUserId(userId);    // deletes all cart row for single user
-		return true;
-	}
-
-	// for the shooping cart when updates qty to less than 1
-	@Transactional
-	public boolean delete(int productId, int userId) {
-		// find the cart item for this user and product
-		CartItem cartItem = shoppingCartRepository.findByUserIdAndProductId(userId, productId);
-
-		// if the item is not in the cart, delete failed
-		if (cartItem == null)
-			return false;
-
-		shoppingCartRepository.delete(cartItem);        // delete only this one cart item
 
 		return true;
 	}
