@@ -12,9 +12,9 @@ import org.yearup.service.UserService;
 import java.security.Principal;
 
 @RestController
+@PreAuthorize("hasRole('USER')")
 @RequestMapping("/profile")
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
 public class ProfileController {
 	private final ProfileService profileService;
 	private final UserService userService;

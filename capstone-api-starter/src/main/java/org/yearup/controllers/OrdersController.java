@@ -12,7 +12,7 @@ import java.net.URI;
 import java.security.Principal;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+@PreAuthorize("hasRole('USER')")
 @RequestMapping("/orders")
 @CrossOrigin
 public class OrdersController {
@@ -25,7 +25,6 @@ public class OrdersController {
 	}
 
 	@PostMapping("")
-	@PreAuthorize("hasRole('USER')")
 	public ResponseEntity<Order> createOrder(Principal principal) {
 		int userId = getUserId(principal);
 		var newOrder = orderService.create(userId);

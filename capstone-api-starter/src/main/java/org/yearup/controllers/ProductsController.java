@@ -40,14 +40,14 @@ public class ProductsController {
 	}
 
 	@PostMapping()
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Product> addProduct(@RequestBody Product product) {
 		Product saved = productService.create(product);
 		return ResponseEntity.status(HttpStatus.CREATED).body(saved);
 	}
 
 	@PutMapping("{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public Product updateProduct(@PathVariable int id, @RequestBody Product product) {
 		if (productService.getById(id) == null)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -56,7 +56,7 @@ public class ProductsController {
 	}
 
 	@DeleteMapping("{id}")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Void> deleteProduct(@PathVariable int id) {
 		if (productService.getById(id) == null)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
