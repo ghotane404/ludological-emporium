@@ -94,7 +94,6 @@ The API is organized into four main layers:
 Add screenshots of the application screens in an `images` folder inside the repository.
 
 
-f
 ### Products Page
 
 <img width="1695" height="917" alt="image-8" src="https://github.com/user-attachments/assets/f8510018-3aa9-4f06-ac2b-83caa2baf006" />
