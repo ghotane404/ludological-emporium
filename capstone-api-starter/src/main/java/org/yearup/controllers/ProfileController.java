@@ -1,6 +1,5 @@
 package org.yearup.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,40 +16,36 @@ import java.security.Principal;
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
 public class ProfileController {
-	private ProfileService profileService;
-	private UserService userService;
+	private final ProfileService profileService;
+	private final UserService userService;
 
-	@Autowired
 	public ProfileController(ProfileService profileService, UserService userService) {
 		this.profileService = profileService;
 		this.userService = userService;
 	}
 
 	@GetMapping("")
-	public ResponseEntity<Profile> getUserInfo(Principal principal){
-		String userName = principal.getName();
-		User user = userService.getByUserName(userName);
-		int userId = user.getId();
-
+	public ResponseEntity<Profile> getProfile(Principal principal){
+		int userId = getUserId(principal);
 		Profile profile = profileService.getProfile(userId);
 
 		return ResponseEntity.ok(profile);
 	}
 
-
 	@PutMapping("")
-	public ResponseEntity<Object> updateProfile(@RequestBody ProfileDto profile, Principal principal) {
-		String userName = principal.getName();
+	public ResponseEntity<Void> updateProfile(@RequestBody ProfileDto profileDto, Principal principal) {
+		int userId = getUserId(principal);
+		boolean updated = profileService.update(userId, profileDto);
 
-		User user = userService.getByUserName(userName);
-		int userId = user.getId();
-
-		boolean updated = profileService.update(userId, profile);
-
-		if (!updated)
-			return ResponseEntity.notFound().build();
+		if (!updated) return ResponseEntity.notFound().build();
 
 		return ResponseEntity.noContent().build();
 	}
 
+	private int getUserId(Principal principal) {
+		String userName = principal.getName();
+		User user = userService.getByUserName(userName);
+
+		return user.getId();
+	}
 }

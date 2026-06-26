@@ -1,5 +1,6 @@
 package org.yearup.service;
 
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,19 @@ class ProductUpdateTest {
 		Product original = productRepository.findById(productId).orElse(null);
 		assertNotNull(original);
 
+		Product updatedProduct = getProduct(productId, original);
+
+		// act
+		productService.update(productId, updatedProduct);
+
+		// assert
+		Product actual = productRepository.findById(productId).orElse(null);
+
+		assertNotNull(actual);
+		assertEquals(999, actual.getStock(), "updating a product should save the new stock value.");
+	}
+
+	private static @NonNull Product getProduct(int productId, Product original) {
 		Product updatedProduct = new Product();
 		updatedProduct.setProductId(productId);
 		updatedProduct.setName(original.getName());
@@ -42,14 +56,6 @@ class ProductUpdateTest {
 
 		// this is the field that's testing
 		updatedProduct.setStock(999);
-
-		// act
-		productService.update(productId, updatedProduct);
-
-		// assert
-		Product actual = productRepository.findById(productId).orElse(null);
-
-		assertNotNull(actual);
-		assertEquals(999, actual.getStock(), "updating a product should save the new stock value.");
+		return updatedProduct;
 	}
 }

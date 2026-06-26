@@ -33,7 +33,6 @@ public class ProductsController {
 	@PreAuthorize("permitAll()")
 	public Product getById(@PathVariable int id) {
 		Product product = productService.getById(id);
-
 		if (product == null)
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
@@ -54,7 +53,6 @@ public class ProductsController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
 		return productService.update(id, product);
-
 	}
 
 	@DeleteMapping("{id}")

@@ -26,7 +26,6 @@ public class OrderLineItem {
 	private double discount;
 
 	public OrderLineItem() {
-
 	}
 
 	public OrderLineItem(int orderLineItemId, int orderId, int productId, double salesPrice, int quantity, double discount) {
@@ -85,8 +84,5 @@ public class OrderLineItem {
 	public void setDiscount(double discount) {
 		this.discount = discount;
 	}
-
-
-
 }
 
