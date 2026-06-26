@@ -91,7 +91,7 @@ The API is organized into four main layers:
 
 ## Application Screenshots
 
-Add screenshots of the application screens in an `images` folder inside the repository.
+Here are the screenshots of the application screens from the front-end.
 
 
 ### Products Page
