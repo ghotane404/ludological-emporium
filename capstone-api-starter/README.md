@@ -97,19 +97,21 @@ Add screenshots of the application screens in an `images` folder inside the repo
 f
 ### Products Page
 
-![Products Page](image-8.png)
+<img width="1695" height="917" alt="image-8" src="https://github.com/user-attachments/assets/f8510018-3aa9-4f06-ac2b-83caa2baf006" />
+
 
 <br>
 
 ### Product Filters
 
-![Product Filters](image-9.png)
+
 
 <br>
 
 ### Shopping Cart Page
 
-![Shopping Cart Page](image-10.png)
+<img width="1679" height="855" alt="image-10" src="https://github.com/user-attachments/assets/d04d2690-727f-440b-967e-d5f40e508265" />
+
 
 
 <br>
@@ -121,20 +123,32 @@ f
 
 The API was tested using the provided Insomnia test collection. The collection included requests for the main backend features, including authentication, products, categories, shopping cart, profile, and checkout/order creation.
 
-![alt text](image-2.png)
 
-![alt text](image-3.png)
+<img width="284" height="162" alt="image-2" src="https://github.com/user-attachments/assets/24c8ea5c-c5f9-4ceb-863e-75f3aea01055" />
 
-![alt text](image-4.png)
+<br>
 
-![alt text](image-5.png)
+<img width="485" height="685" alt="image-3" src="https://github.com/user-attachments/assets/977908b7-dca3-4054-bdec-11aec17fe07e" />
 
-![alt text](image-6.png)
+<br>
 
+<img width="522" height="506" alt="image-4" src="https://github.com/user-attachments/assets/0190a3dd-8605-4d8d-b62e-d12295ef68a9" />
+
+<br>
+
+<img width="444" height="516" alt="image-5" src="https://github.com/user-attachments/assets/73e5a166-2dec-4caa-8652-53561211f25f" />
+
+<br>
+
+<img width="460" height="558" alt="image-6" src="https://github.com/user-attachments/assets/3a247f70-ffea-4758-ac8b-6bd33d61f4b1" />
+
+<br>
 
 After running the tests in Insomnia, all provided tests passed successfully.
 
-![alt text](image-7.png)
+<br>
+
+<img width="497" height="393" alt="image-7" src="https://github.com/user-attachments/assets/5e11c17b-2449-4dde-8212-91dedfdd984d" />
 
 
 <br>
